@@ -21,6 +21,7 @@ PORTFOLIO_FILE = "portfolio.json"
 TRADE_LOG_FILE = "trade_log.csv"
 PERFORMANCE_FILE = "performance_history.csv"
 CURRENT_HOLDINGS_FILE = "current_holdings.csv"
+UNIVERSE_RANKS_FILE = "universe_ranks.csv"
 
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
@@ -196,7 +197,7 @@ def run_scanner():
     tv_n500 = get_tv_single_data(['CNX500', 'NIFTY500'])
     n500_3m = tv_n500['perf_3m'] if tv_n500 else 0.0
 
-    if is_rebalance_day:
+    if is_rebalance_day or not os.path.exists(UNIVERSE_RANKS_FILE):
         candidates = scan_tv_universe()
         scored_candidates = []
 
@@ -211,19 +212,37 @@ def run_scanner():
                 vol_adj_mom = smooth_mom / max(item['atr_pct'], 0.5)
                 high_proximity = (p / h52w) ** 4
                 score = vol_adj_mom * high_proximity
-                scored_candidates.append({'ticker': stk, 'price': p, 'score': score})
+
+                scored_candidates.append({
+                    'ticker': stk,
+                    'Ticker': stk.replace('.NS', ''),
+                    'Price': round(p, 2),
+                    'Score': round(score, 4),
+                    '3M Return (%)': round(item['perf_3m'], 2),
+                    '6M Return (%)': round(item['perf_6m'], 2),
+                    '12M Return (%)': round(item['perf_12m'], 2),
+                    'Alpha 3M (%)': round(alpha_3m, 2),
+                    '52W High': round(h52w, 2),
+                    'ATR 14 (%)': round(item['atr_pct'], 2),
+                    'SMA 200': round(item['sma200'], 2)
+                })
 
         if scored_candidates:
-            cand_df = pd.DataFrame(scored_candidates).sort_values(by='score', ascending=False).reset_index(drop=True)
-            cand_df['rank'] = cand_df.index + 1
-            rank_lookup = dict(zip(cand_df['ticker'], cand_df['rank']))
+            cand_df = pd.DataFrame(scored_candidates).sort_values(by='Score', ascending=False).reset_index(drop=True)
+            cand_df['Rank'] = cand_df.index + 1
+            
+            # Export Universe Ranks CSV
+            export_cols = ['Rank', 'Ticker', 'Price', 'Score', '3M Return (%)', '6M Return (%)', '12M Return (%)', 'Alpha 3M (%)', '52W High', 'ATR 14 (%)', 'SMA 200']
+            cand_df[export_cols].to_csv(UNIVERSE_RANKS_FILE, index=False)
+            
+            rank_lookup = dict(zip(cand_df['ticker'], cand_df['Rank']))
 
             # Rank Decay Exit (> Rank 25)
             for stock, pos in list(holdings.items()):
                 cur_rank = rank_lookup.get(stock, 999)
                 if cur_rank > MAX_HOLD_RANK:
                     clean_sym = stock.replace('.NS', '')
-                    cur_p = cand_df.loc[cand_df['ticker'] == stock, 'price'].values[0] if stock in cand_df['ticker'].values else pos['entry_price']
+                    cur_p = cand_df.loc[cand_df['ticker'] == stock, 'Price'].values[0] if stock in cand_df['ticker'].values else pos['entry_price']
                     exit_price = cur_p * SLIPPAGE_SELL
                     cash += pos['shares'] * exit_price
                     ret_pct = ((exit_price - pos['entry_price']) / pos['entry_price']) * 100
@@ -251,7 +270,7 @@ def run_scanner():
                 alloc_target = portfolio_val / TARGET_POSITIONS
 
                 for _, row in buy_candidates.iterrows():
-                    stk, p = row['ticker'], row['price']
+                    stk, p = row['ticker'], row['Price']
                     effective_buy = p * SLIPPAGE_BUY
                     alloc = min(cash, alloc_target)
                     shares = int(np.floor(alloc / effective_buy))
@@ -268,7 +287,7 @@ def run_scanner():
 
         last_week = current_week
 
-    # 3. SAVE STATE & CURRENT HOLDINGS CSV WITH ATR TRAILING STOPS
+    # 3. SAVE STATE & CURRENT HOLDINGS CSV
     if closed_trades:
         pd.DataFrame(closed_trades).to_csv(TRADE_LOG_FILE, mode='a', header=False, index=False)
 
