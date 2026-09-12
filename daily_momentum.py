@@ -182,10 +182,10 @@ def run_scanner():
     holdings = retained_holdings
 
     # 2. WEEKLY REBALANCING & RANK DECAY EVALUATION
-    if is_rebalance_day:
-        tv_n500 = get_tv_single_data(['CNX500', 'NIFTY500'])
-        n500_3m = tv_n500['perf_3m'] if tv_n500 else 0.0
+    tv_n500 = get_tv_single_data(['CNX500', 'NIFTY500'])
+    n500_3m = tv_n500['perf_3m'] if tv_n500 else 0.0
 
+    if is_rebalance_day:
         candidates = scan_tv_universe()
         scored_candidates = []
 
@@ -253,6 +253,7 @@ def run_scanner():
 
         last_week = current_week
 
+    # 3. SAVE STATE & CURRENT HOLDINGS CSV
     if closed_trades:
         pd.DataFrame(closed_trades).to_csv(TRADE_LOG_FILE, mode='a', header=False, index=False)
 
@@ -275,8 +276,72 @@ def run_scanner():
         })
     pd.DataFrame(holdings_rows).to_csv(CURRENT_HOLDINGS_FILE, index=False)
 
+    # 4. FETCH BENCHMARKS & APPEND PERFORMANCE HISTORY
+    tv_n50 = get_tv_single_data(['NIFTY', 'NIFTY50'])
+    tv_mid100 = get_tv_single_data(['CNXMIDCAP', 'NIFTY_MIDCAP_100'])
+    tv_nJR = get_tv_single_data(['NIFTYJR', 'NIFTYNXT50'])
+    tv_sml100 = get_tv_single_data(['CNXSMALLCAP', 'NIFTYSMLCAP100'])
+
+    n50_val = tv_n50['close'] if tv_n50 else 0.0
+    n500_val = tv_n500['close'] if tv_n500 else 0.0
+    mid100_val = tv_mid100['close'] if tv_mid100 else 0.0
+    nJR_val = tv_nJR['close'] if tv_nJR else 0.0
+    sml100_val = tv_sml100['close'] if tv_sml100 else 0.0
+
     tot_val = cash + sum(r['Current Value'] for r in holdings_rows)
     p_ret = ((tot_val - INITIAL_CAPITAL) / INITIAL_CAPITAL) * 100
+
+    base_n50, base_n500, base_mid100 = n50_val, n500_val, mid100_val
+    base_nJR, base_sml100 = nJR_val, sml100_val
+
+    if os.path.exists(PERFORMANCE_FILE) and os.path.getsize(PERFORMANCE_FILE) > 0:
+        try:
+            df_perf_old = pd.read_csv(PERFORMANCE_FILE)
+            if not df_perf_old.empty:
+                first_row = df_perf_old.iloc[0]
+                base_n50 = first_row.get('Nifty_50', n50_val)
+                base_n500 = first_row.get('Nifty_500', n500_val)
+                base_mid100 = first_row.get('Nifty_Midcap_100', mid100_val)
+                base_nJR = first_row.get('Nifty_Next_50', nJR_val)
+                base_sml100 = first_row.get('Nifty_Smallcap_100', sml100_val)
+        except Exception:
+            pass
+
+    n50_ret = ((n50_val - base_n50) / base_n50 * 100) if base_n50 > 0 else 0.0
+    n500_ret = ((n500_val - base_n500) / base_n500 * 100) if base_n500 > 0 else 0.0
+    mid100_ret = ((mid100_val - base_mid100) / base_mid100 * 100) if base_mid100 > 0 else 0.0
+    nJR_ret = ((nJR_val - base_nJR) / base_nJR * 100) if base_nJR > 0 else 0.0
+    sml100_ret = ((sml100_val - base_sml100) / base_sml100 * 100) if base_sml100 > 0 else 0.0
+
+    perf_row = pd.DataFrame([{
+        'Date': dt_str,
+        'Portfolio_Value': round(tot_val, 2),
+        'Portfolio_Return (%)': round(p_ret, 2),
+        'Cash': round(cash, 2),
+        'Holdings_Count': len(holdings),
+        'Nifty_50': round(n50_val, 2),
+        'Nifty_50_Return (%)': round(n50_ret, 2),
+        'Nifty_500': round(n500_val, 2),
+        'Nifty_500_Return (%)': round(n500_ret, 2),
+        'Nifty_Midcap_100': round(mid100_val, 2),
+        'Nifty_Midcap_100_Return (%)': round(mid100_ret, 2),
+        'Nifty_Next_50': round(nJR_val, 2),
+        'Nifty_Next_50_Return (%)': round(nJR_ret, 2),
+        'Nifty_Smallcap_100': round(sml100_val, 2),
+        'Nifty_Smallcap_100_Return (%)': round(sml100_ret, 2)
+    }])
+
+    if os.path.exists(PERFORMANCE_FILE) and os.path.getsize(PERFORMANCE_FILE) > 0:
+        df_existing = pd.read_csv(PERFORMANCE_FILE)
+        if 'Portfolio_Return (%)' in df_existing.columns:
+            df_existing = df_existing[df_existing['Date'] != dt_str]
+            pd.concat([df_existing, perf_row], ignore_index=True).to_csv(PERFORMANCE_FILE, index=False)
+        else:
+            perf_row.to_csv(PERFORMANCE_FILE, index=False)
+    else:
+        perf_row.to_csv(PERFORMANCE_FILE, index=False)
+
+    # TELEGRAM NOTIFICATION
     msg = f"📊 *QUANT MOMENTUM SCAN* ({dt_str})\n"
     msg += f"💼 Portfolio Value: ₹{tot_val:,.2f} ({p_ret:+.2f}%)\n"
     msg += f"💵 Available Cash: ₹{cash:,.2f}\n"
