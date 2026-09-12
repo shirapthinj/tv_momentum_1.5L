@@ -1,5 +1,66 @@
 {
-    "cash": 150000.0,
-    "holdings": {},
-    "last_week": null
+    "cash": 5051.492884999971,
+    "holdings": {
+        "UHTL.NS": {
+            "shares": 85,
+            "entry_price": 175.012125,
+            "peak_price": 174.75,
+            "entry_date": "2026-09-11"
+        },
+        "STLTECH.NS": {
+            "shares": 16,
+            "entry_price": 898.7461000000001,
+            "peak_price": 897.4,
+            "entry_date": "2026-09-11"
+        },
+        "SIGMAADV.NS": {
+            "shares": 17,
+            "entry_price": 833.6986750000001,
+            "peak_price": 832.45,
+            "entry_date": "2026-09-11"
+        },
+        "CUPID.NS": {
+            "shares": 53,
+            "entry_price": 280.42,
+            "peak_price": 280.0,
+            "entry_date": "2026-09-11"
+        },
+        "BLISSGVS.NS": {
+            "shares": 20,
+            "entry_price": 722.0314250000001,
+            "peak_price": 720.95,
+            "entry_date": "2026-09-11"
+        },
+        "SETL.NS": {
+            "shares": 31,
+            "entry_price": 468.852225,
+            "peak_price": 468.15,
+            "entry_date": "2026-09-11"
+        },
+        "BHAGYANGR.NS": {
+            "shares": 35,
+            "entry_price": 423.183825,
+            "peak_price": 422.55,
+            "entry_date": "2026-09-11"
+        },
+        "WELCORP.NS": {
+            "shares": 5,
+            "entry_price": 2680.6149,
+            "peak_price": 2676.6,
+            "entry_date": "2026-09-11"
+        },
+        "ACCENTMIC.NS": {
+            "shares": 20,
+            "entry_price": 726.8386250000001,
+            "peak_price": 725.75,
+            "entry_date": "2026-09-11"
+        },
+        "PAISALO.NS": {
+            "shares": 177,
+            "entry_price": 84.356345,
+            "peak_price": 84.23,
+            "entry_date": "2026-09-11"
+        }
+    },
+    "last_week": 37
 }
