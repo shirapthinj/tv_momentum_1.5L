@@ -12,12 +12,11 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Custom CSS: Executive Styling, Bolder Headers, Center Alignment
+# Custom Styling: Metric Card Layout & Bold Alignment
 st.markdown("""
 <style>
     .stApp { background-color: #0B0E14; font-family: 'Inter', sans-serif; }
     
-    /* KPI Card Styling - Center Aligned & Bolder Headings */
     div[data-testid="stMetric"] {
         background-color: #161B22; border: 1px solid #262C36;
         padding: 14px 10px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
@@ -44,12 +43,10 @@ st.markdown("""
     }
     div[data-testid="stMetricDelta"] > div { justify-content: center !important; text-align: center !important; }
 
-    /* Center-Align All Table Headers & Cells */
     [data-testid="stDataFrame"] { text-align: center !important; }
     [data-testid="stDataFrame"] div[role="grid"] { text-align: center !important; }
     [data-testid="stDataFrame"] td, [data-testid="stDataFrame"] th { text-align: center !important; }
 
-    /* Tabs Styling */
     .stTabs [data-baseweb="tab-list"] { background-color: #161B22; padding: 6px; border-radius: 10px; border: 1px solid #262C36; }
     .stTabs [aria-selected="true"] { background-color: #21262D !important; color: #58A6FF !important; font-weight: 600; }
     div[data-testid="stDataFrame"] { background-color: #161B22; border-radius: 10px; border: 1px solid #262C36; }
@@ -69,7 +66,6 @@ def load_data():
 
 holdings_df, perf_df, trades_df = load_data()
 
-# Helper: Max Drawdown Calculation
 def calc_max_drawdown(series):
     if series.empty or series.dropna().empty:
         return 0.0
@@ -78,12 +74,10 @@ def calc_max_drawdown(series):
     dd = ((s - peak) / peak) * 100
     return dd.min()
 
-# Calculate Portfolio Drawdown Curve
 if not perf_df.empty and 'Portfolio_Value' in perf_df.columns:
     perf_df['Peak_Val'] = perf_df['Portfolio_Value'].cummax()
     perf_df['Drawdown (%)'] = ((perf_df['Portfolio_Value'] - perf_df['Peak_Val']) / perf_df['Peak_Val']) * 100
 
-# TOP EXECUTIVE KPI CARDS
 if not perf_df.empty:
     latest = perf_df.iloc[-1]
     col1, col2, col3, col4, col5, col6, col7 = st.columns(7)
@@ -164,8 +158,6 @@ with tab1:
     st.markdown("### 🎯 Benchmark Risk & Max Drawdown Comparison")
     if not perf_df.empty:
         risk_metrics = []
-        
-        # Strategy Row
         p_ret = perf_df['Portfolio_Return (%)'].iloc[-1]
         p_mdd = calc_max_drawdown(perf_df['Portfolio_Value'])
         calmar = abs(p_ret / p_mdd) if p_mdd != 0 else 0.0
@@ -177,7 +169,6 @@ with tab1:
             'Calmar Ratio': f"{calmar:.2f}"
         })
 
-        # Benchmarks
         bench_cols = [
             ('Nifty_50', 'Nifty_50_Return (%)', 'Nifty 50'),
             ('Nifty_500', 'Nifty_500_Return (%)', 'Nifty 500'),
@@ -205,8 +196,10 @@ with tab1:
 # TAB 2: ACTIVE HOLDINGS & RISK BUFFERS
 with tab2:
     if not holdings_df.empty:
-        holdings_df['Stop Price'] = holdings_df['Peak Price'] * 0.88
-        holdings_df['Stop Buffer (%)'] = ((holdings_df['Current Price'] - holdings_df['Stop Price']) / holdings_df['Current Price']) * 100
+        if 'Stop Price' not in holdings_df.columns:
+            holdings_df['Stop Price'] = holdings_df['Peak Price'] * 0.85
+        if 'Stop Buffer (%)' not in holdings_df.columns:
+            holdings_df['Stop Buffer (%)'] = ((holdings_df['Current Price'] - holdings_df['Stop Price']) / holdings_df['Current Price']) * 100
         
         col_bar, col_alloc = st.columns([1.5, 1])
         
@@ -240,18 +233,21 @@ with tab2:
             )
             st.plotly_chart(alloc_fig, use_container_width=True)
 
-        st.markdown("### 📋 Position Tracking Table & Stop Loss Buffers")
+        st.markdown("### 📋 Position Tracking Table & 3.5x ATR Stop Loss Buffers")
+        cols_to_show = [c for c in ['Ticker', 'Entry Date', 'Entry Price', 'Current Price', 'Peak Price', 'ATR 14', 'Stop Price', 'Stop Buffer (%)', 'Shares', 'Current Value', 'PnL (%)'] if c in holdings_df.columns]
+        
         st.dataframe(
-            holdings_df[['Ticker', 'Entry Date', 'Entry Price', 'Current Price', 'Peak Price', 'Stop Price', 'Stop Buffer (%)', 'Shares', 'Current Value', 'PnL (%)']],
+            holdings_df[cols_to_show],
             use_container_width=True, hide_index=True,
             column_config={
                 "PnL (%)": st.column_config.NumberColumn("PnL (%)", format="%.2f%%"),
-                "Stop Buffer (%)": st.column_config.NumberColumn("Stop Buffer (%)", format="%.2f%%"),
+                "Stop Buffer (%)": st.column_config.NumberColumn("ATR Stop Buffer (%)", format="%.2f%%"),
                 "Current Value": st.column_config.NumberColumn("Position Value", format="₹%.2f"),
                 "Current Price": st.column_config.NumberColumn("Current Price", format="₹%.2f"),
                 "Entry Price": st.column_config.NumberColumn("Entry Price", format="₹%.2f"),
                 "Peak Price": st.column_config.NumberColumn("Peak Price", format="₹%.2f"),
-                "Stop Price": st.column_config.NumberColumn("12% Stop Price", format="₹%.2f"),
+                "ATR 14": st.column_config.NumberColumn("14-Day ATR", format="₹%.2f"),
+                "Stop Price": st.column_config.NumberColumn("3.5x ATR Stop Price", format="₹%.2f"),
             }
         )
     else:
@@ -261,30 +257,27 @@ with tab2:
 with tab3:
     st.markdown("### 💸 Zerodha Delivery Cost Engine (Tax & Fee Breakdown)")
     
-    # Estimate Turnover from Current Holdings + Closed Trades
     buy_turnover = holdings_df['Current Value'].sum() if not holdings_df.empty else 0.0
     closed_turnover = 0.0
     closed_trades_count = 0
     
     if not trades_df.empty:
         closed_trades_count = len(trades_df)
-        # Assuming average ~₹25k turnover per trade leg
-        closed_turnover = closed_trades_count * 25000.0 * 2.0
+        closed_turnover = closed_trades_count * 15000.0 * 2.0
 
     total_buy_turnover = buy_turnover + (closed_turnover / 2.0)
     total_sell_turnover = (closed_turnover / 2.0)
     total_turnover = total_buy_turnover + total_sell_turnover
 
-    # Zerodha Fee Engine Calculations
     stt = (total_buy_turnover * 0.001) + (total_sell_turnover * 0.001)
     stamp_duty = total_buy_turnover * 0.00015
     exchange_fee = total_turnover * 0.0000297
     sebi_fee = total_turnover * 0.000001
     gst = (exchange_fee + sebi_fee) * 0.18
-    dp_charges = closed_trades_count * 15.34  # ₹13 + 18% GST flat per sell
+    dp_charges = closed_trades_count * 15.34
     
     total_taxes = stt + stamp_duty + exchange_fee + sebi_fee + gst + dp_charges
-    initial_cap = 500000.0
+    initial_cap = 150000.0
     tax_drag_pct = (total_taxes / initial_cap) * 100
 
     f1, f2, f3, f4, f5 = st.columns(5)
