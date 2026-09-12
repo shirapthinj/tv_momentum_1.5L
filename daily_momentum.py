@@ -6,13 +6,13 @@ import numpy as np
 from datetime import datetime, timedelta
 from tradingview_ta import TA_Handler, Interval
 
-# CONFIGURATION STRICTLY MATCHING backtest_mom3v1.py
-INITIAL_CAPITAL = 150000.0     # ₹1.5 Lakhs
-TARGET_POSITIONS = 10          # 10 slots (10% per stock)
-MAX_HOLD_RANK = 25             # Top 25 Rank Decay Cutoff
-ATR_MULTIPLIER = 3.5           # 3.5x ATR Trailing Stop
+# SYSTEM CONFIGURATION ALIGNED STRICTLY WITH backtest_mom3v1.py
+INITIAL_CAPITAL = 150000.0     # ₹1.5 Lakhs Initial Capital
+TARGET_POSITIONS = 10          # 10 slots (10% capital per position)
+MAX_HOLD_RANK = 25             # Rank Decay Cutoff (Top 25)
+ATR_MULTIPLIER = 3.5           # 3.5x ATR Dynamic Trailing Stop
 MIN_TURNOVER = 50000000        # ₹5 Crore Daily Turnover Floor
-MIN_STOCK_PRICE = 20.0         # ₹20 Minimum Stock Price
+MIN_STOCK_PRICE = 20.0         # ₹20 Minimum Stock Price Floor
 
 SLIPPAGE_BUY = 1.0015          # 0.15% Buy Slippage
 SLIPPAGE_SELL = 0.9985         # 0.15% Sell Slippage
@@ -25,6 +25,12 @@ CURRENT_HOLDINGS_FILE = "current_holdings.csv"
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
+def init_csv_files():
+    if not os.path.exists(TRADE_LOG_FILE):
+        pd.DataFrame(columns=[
+            'Ticker', 'Entry Date', 'Entry Price', 'Exit Date', 'Exit Price', 'Return (%)', 'Holding Days', 'Exit Reason'
+        ]).to_csv(TRADE_LOG_FILE, index=False)
+
 def send_telegram(message):
     if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
         print(message)
@@ -34,7 +40,7 @@ def send_telegram(message):
     try:
         requests.post(url, json=payload, timeout=10)
     except Exception as e:
-        print(f"Telegram error: {e}")
+        print(f"Telegram send error: {e}")
 
 def get_latest_market_date():
     now = datetime.now()
@@ -133,6 +139,7 @@ def scan_tv_universe():
     return []
 
 def run_scanner():
+    init_csv_files()
     with open(PORTFOLIO_FILE, "r") as f:
         state = json.load(f)
 
@@ -171,10 +178,14 @@ def run_scanner():
 
             sell_signals.append(f"🔴 *SELL (3.5x ATR Stop):* `{clean_sym}` @ ₹{exit_price:,.2f} ({ret_pct:+.2f}%)")
             closed_trades.append({
-                'Ticker': clean_sym, 'Entry Date': pos['entry_date'],
-                'Entry Price': round(pos['entry_price'], 2), 'Exit Date': dt_str,
-                'Exit Price': round(exit_price, 2), 'Return (%)': round(ret_pct, 2),
-                'Holding Days': days_held, 'Exit Reason': f"{ATR_MULTIPLIER}x ATR Trailing Stop"
+                'Ticker': clean_sym,
+                'Entry Date': pos['entry_date'],
+                'Entry Price': round(pos['entry_price'], 2),
+                'Exit Date': dt_str,
+                'Exit Price': round(exit_price, 2),
+                'Return (%)': round(ret_pct, 2),
+                'Holding Days': days_held,
+                'Exit Reason': f"{ATR_MULTIPLIER}x ATR Trailing Stop"
             })
         else:
             retained_holdings[stock] = pos
@@ -220,10 +231,14 @@ def run_scanner():
 
                     sell_signals.append(f"🔴 *SELL (Rank Decay #{cur_rank}):* `{clean_sym}` @ ₹{exit_price:,.2f}")
                     closed_trades.append({
-                        'Ticker': clean_sym, 'Entry Date': pos['entry_date'],
-                        'Entry Price': round(pos['entry_price'], 2), 'Exit Date': dt_str,
-                        'Exit Price': round(exit_price, 2), 'Return (%)': round(ret_pct, 2),
-                        'Holding Days': days_held, 'Exit Reason': f"Rank Decay Exit (Rank #{cur_rank})"
+                        'Ticker': clean_sym,
+                        'Entry Date': pos['entry_date'],
+                        'Entry Price': round(pos['entry_price'], 2),
+                        'Exit Date': dt_str,
+                        'Exit Price': round(exit_price, 2),
+                        'Return (%)': round(ret_pct, 2),
+                        'Holding Days': days_held,
+                        'Exit Reason': f"Rank Decay Exit (Rank #{cur_rank})"
                     })
                     del holdings[stock]
 
@@ -253,7 +268,7 @@ def run_scanner():
 
         last_week = current_week
 
-    # 3. SAVE STATE & CURRENT HOLDINGS CSV
+    # 3. SAVE STATE & CURRENT HOLDINGS CSV WITH ATR TRAILING STOPS
     if closed_trades:
         pd.DataFrame(closed_trades).to_csv(TRADE_LOG_FILE, mode='a', header=False, index=False)
 
@@ -262,17 +277,27 @@ def run_scanner():
 
     holdings_rows = []
     for stk, info in holdings.items():
-        data = get_tv_single_data(stk.replace('.NS', ''))
+        clean_sym = stk.replace('.NS', '')
+        data = get_tv_single_data(clean_sym)
         cur_p = data['close'] if data else info['entry_price']
+        peak_p = max(info.get('peak_price', cur_p), cur_p)
+        atr_val = data['atr14'] if data else 0.0
+
+        stop_p = peak_p - (ATR_MULTIPLIER * atr_val) if atr_val > 0 else peak_p * 0.85
+        stop_buffer = ((cur_p - stop_p) / cur_p) * 100 if cur_p > 0 else 0.0
+
         holdings_rows.append({
-            'Ticker': stk.replace('.NS', ''),
+            'Ticker': clean_sym,
             'Entry Date': info['entry_date'],
             'Entry Price': round(info['entry_price'], 2),
             'Current Price': round(cur_p, 2),
             'Shares': info['shares'],
             'Current Value': round(cur_p * info['shares'], 2),
             'PnL (%)': round(((cur_p - info['entry_price']) / info['entry_price']) * 100, 2),
-            'Peak Price': round(info.get('peak_price', cur_p), 2)
+            'Peak Price': round(peak_p, 2),
+            'ATR 14': round(atr_val, 2),
+            'Stop Price': round(stop_p, 2),
+            'Stop Buffer (%)': round(stop_buffer, 2)
         })
     pd.DataFrame(holdings_rows).to_csv(CURRENT_HOLDINGS_FILE, index=False)
 
@@ -345,7 +370,7 @@ def run_scanner():
     msg = f"📊 *QUANT MOMENTUM SCAN* ({dt_str})\n"
     msg += f"💼 Portfolio Value: ₹{tot_val:,.2f} ({p_ret:+.2f}%)\n"
     msg += f"💵 Available Cash: ₹{cash:,.2f}\n"
-    msg += f"📌 Holdings: {len(holdings)}/{TARGET_POSITIONS}\n\n"
+    msg += f"📌 Positions: {len(holdings)}/{TARGET_POSITIONS}\n\n"
 
     if sell_signals:
         msg += "*EXITS TRIGGERED:*\n" + "\n".join(sell_signals) + "\n\n"
