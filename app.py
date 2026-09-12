@@ -12,7 +12,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Custom Styling: Metric Card Layout & Bold Alignment
+# Custom Styling
 st.markdown("""
 <style>
     .stApp { background-color: #0B0E14; font-family: 'Inter', sans-serif; }
@@ -62,9 +62,10 @@ def load_data():
     holdings = pd.read_csv("current_holdings.csv") if os.path.exists("current_holdings.csv") else pd.DataFrame()
     perf = pd.read_csv("performance_history.csv") if os.path.exists("performance_history.csv") else pd.DataFrame()
     trades = pd.read_csv("trade_log.csv") if os.path.exists("trade_log.csv") else pd.DataFrame()
-    return holdings, perf, trades
+    ranks = pd.read_csv("universe_ranks.csv") if os.path.exists("universe_ranks.csv") else pd.DataFrame()
+    return holdings, perf, trades, ranks
 
-holdings_df, perf_df, trades_df = load_data()
+holdings_df, perf_df, trades_df, ranks_df = load_data()
 
 def calc_max_drawdown(series):
     if series.empty or series.dropna().empty:
@@ -102,9 +103,10 @@ if not perf_df.empty:
     
     st.markdown("<br>", unsafe_allow_html=True)
 
-tab1, tab2, tab3, tab4 = st.tabs([
+tab1, tab2, tab3, tab4, tab5 = st.tabs([
     "📈 Returns & Risk Benchmarks", 
     "📋 Active Positions & Risk Exposure", 
+    "🏆 Universe Rankings & Candidates",
     "💸 Zerodha Friction & Cost Drag", 
     "📜 Executed Trade History"
 ])
@@ -253,8 +255,51 @@ with tab2:
     else:
         st.info("No active holdings currently in portfolio.")
 
-# TAB 3: ZERODHA FRICTION & TAX ANALYSIS
+# TAB 3: UNIVERSE RANKINGS & CANDIDATES
 with tab3:
+    st.markdown("### 🏆 Nifty 500 Scored Candidates & Rank Hierarchy")
+    if not ranks_df.empty:
+        r1, r2, r3, r4 = st.columns(4)
+        r1.metric("Total Qualified Stocks", len(ranks_df))
+        top10_score = ranks_df.iloc[9]['Score'] if len(ranks_df) >= 10 else 0.0
+        top25_score = ranks_df.iloc[24]['Score'] if len(ranks_df) >= 25 else 0.0
+        r2.metric("Top 10 Entry Cutoff Score", f"{top10_score:.2f}")
+        r3.metric("Top 25 Rank Decay Cutoff", f"{top25_score:.2f}")
+        
+        active_symbols = set(holdings_df['Ticker'].tolist()) if not holdings_df.empty else set()
+        held_in_universe = ranks_df[ranks_df['Ticker'].isin(active_symbols)]
+        avg_held_rank = held_in_universe['Rank'].mean() if not held_in_universe.empty else 0.0
+        r4.metric("Avg Rank of Portfolio", f"#{avg_held_rank:.1f}" if avg_held_rank > 0 else "—")
+
+        st.markdown("<br>", unsafe_allow_html=True)
+        search_term = st.text_input("🔍 Search Ticker in Universe Rankings:", "").strip().upper()
+        
+        disp_df = ranks_df.copy()
+        disp_df['Status'] = disp_df['Ticker'].apply(lambda x: '💼 HELD' if x in active_symbols else ('🟢 TOP 10 PICK' if disp_df.loc[disp_df['Ticker'] == x, 'Rank'].values[0] <= 10 else ('🟡 TOP 25 SAFE' if disp_df.loc[disp_df['Ticker'] == x, 'Rank'].values[0] <= 25 else '⚪ DECAY ZONE')))
+        
+        if search_term:
+            disp_df = disp_df[disp_df['Ticker'].str.contains(search_term)]
+
+        st.dataframe(
+            disp_df[['Rank', 'Status', 'Ticker', 'Price', 'Score', '3M Return (%)', '6M Return (%)', '12M Return (%)', 'Alpha 3M (%)', '52W High', 'ATR 14 (%)', 'SMA 200']],
+            use_container_width=True, hide_index=True,
+            column_config={
+                "Score": st.column_config.NumberColumn("Momentum Score", format="%.2f"),
+                "Price": st.column_config.NumberColumn("Current Price", format="₹%.2f"),
+                "52W High": st.column_config.NumberColumn("52W High", format="₹%.2f"),
+                "SMA 200": st.column_config.NumberColumn("200 SMA", format="₹%.2f"),
+                "3M Return (%)": st.column_config.NumberColumn("3M Return (%)", format="%.2f%%"),
+                "6M Return (%)": st.column_config.NumberColumn("6M Return (%)", format="%.2f%%"),
+                "12M Return (%)": st.column_config.NumberColumn("12M Return (%)", format="%.2f%%"),
+                "Alpha 3M (%)": st.column_config.NumberColumn("Alpha vs Nifty 500", format="%.2f%%"),
+                "ATR 14 (%)": st.column_config.NumberColumn("ATR (%)", format="%.2f%%")
+            }
+        )
+    else:
+        st.info("Universe rankings will populate after the next market rebalance scan.")
+
+# TAB 4: ZERODHA FRICTION & TAX ANALYSIS
+with tab4:
     st.markdown("### 💸 Zerodha Delivery Cost Engine (Tax & Fee Breakdown)")
     
     buy_turnover = holdings_df['Current Value'].sum() if not holdings_df.empty else 0.0
@@ -300,8 +345,8 @@ with tab3:
     ]
     st.dataframe(pd.DataFrame(fee_structure), use_container_width=True, hide_index=True)
 
-# TAB 4: EXECUTED TRADE LOGS & PERFORMANCE STATS
-with tab4:
+# TAB 5: EXECUTED TRADE LOGS & PERFORMANCE STATS
+with tab5:
     if not trades_df.empty and len(trades_df) > 0:
         win_trades = trades_df[trades_df['Return (%)'] > 0]
         loss_trades = trades_df[trades_df['Return (%)'] <= 0]
