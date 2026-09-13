@@ -6,7 +6,7 @@ import numpy as np
 from datetime import datetime, timedelta
 from tradingview_ta import TA_Handler, Interval
 
-# SYSTEM CONFIGURATION ALIGNED STRICTLY WITH backtest_mom3v1.py
+# CONFIGURATION STRICTLY ALIGNED WITH backtest_mom3v1.py
 INITIAL_CAPITAL = 150000.0     # ₹1.5 Lakhs Initial Capital
 TARGET_POSITIONS = 10          # 10 slots (10% capital per position)
 MAX_HOLD_RANK = 25             # Rank Decay Cutoff (Top 25)
@@ -74,14 +74,26 @@ def get_tv_single_data(symbol_candidates):
                 )
                 ind = handler.get_analysis().indicators
                 close_val = float(ind.get('close', 0.0))
+                high_val = float(ind.get('high', close_val))
+                low_val = float(ind.get('low', close_val))
+
                 if close_val > 0:
-                    atr = float(ind.get('ATR', 0.0))
-                    atr_pct = (atr / close_val * 100) if close_val > 0 else 2.0
+                    atr_pct = float(ind.get('Volatility.D') or 0.0)
+                    if atr_pct > 0:
+                        atr_val = (atr_pct / 100.0) * close_val
+                    else:
+                        atr_val = float(ind.get('ATR') or (high_val - low_val))
+                        if atr_val <= 0:
+                            atr_val = close_val * 0.025
+                        atr_pct = (atr_val / close_val) * 100.0
+
                     return {
                         'close': close_val,
+                        'high': high_val,
+                        'low': low_val,
                         'sma200': float(ind.get('SMA200', 0.0)),
                         'high52w': float(ind.get('price_52_week_high', close_val)),
-                        'atr14': atr,
+                        'atr14': atr_val,
                         'atr_pct': atr_pct,
                         'perf_3m': float(ind.get('Perf.3M', 0.0)),
                         'perf_6m': float(ind.get('Perf.6M', 0.0)),
@@ -102,7 +114,8 @@ def scan_tv_universe():
         "symbols": {"query": {"types": []}, "tickers": []},
         "columns": [
             "name", "close", "SMA200", "price_52_week_high",
-            "Perf.3M", "Perf.6M", "Perf.Y", "ATR", "Value.Traded"
+            "Perf.3M", "Perf.6M", "Perf.Y", "Volatility.D", "Value.Traded",
+            "high", "low"
         ],
         "sort": {"sortBy": "Perf.3M", "sortOrder": "desc"},
         "range": [0, 500]
@@ -114,15 +127,28 @@ def scan_tv_universe():
             candidates = []
             for item in res.json().get('data', []):
                 cols = item.get('d', [])
-                if len(cols) >= 9:
-                    name, close, sma200, h52w, r3m, r6m, r12m, atr, turnover = cols[:9]
+                if len(cols) >= 11:
+                    name, close, sma200, h52w, r3m, r6m, r12m, vol_d, turnover, high_val, low_val = cols[:11]
+                    
                     if not close or close < MIN_STOCK_PRICE or not turnover or turnover < MIN_TURNOVER:
                         continue
                     if not sma200 or close <= sma200:
                         continue
 
-                    atr_val = float(atr or 0.0)
-                    atr_pct = (atr_val / float(close) * 100) if close > 0 else 2.0
+                    # Upper Circuit Guard
+                    if high_val is not None and low_val is not None and float(high_val) > 0:
+                        if float(high_val) == float(low_val):
+                            continue
+
+                    atr_pct = float(vol_d or 0.0)
+                    if atr_pct <= 0 and high_val and low_val and float(close) > 0:
+                        atr_pct = ((float(high_val) - float(low_val)) / float(close)) * 100.0
+
+                    if atr_pct < 0.8:
+                        continue
+
+                    atr_val = (atr_pct / 100.0) * float(close)
+
                     candidates.append({
                         'symbol': f"{name}.NS",
                         'close': float(close),
@@ -231,8 +257,19 @@ def run_scanner():
             cand_df = pd.DataFrame(scored_candidates).sort_values(by='Score', ascending=False).reset_index(drop=True)
             cand_df['Rank'] = cand_df.index + 1
             
-            # Export Universe Ranks CSV
-            export_cols = ['Rank', 'Ticker', 'Price', 'Score', '3M Return (%)', '6M Return (%)', '12M Return (%)', 'Alpha 3M (%)', '52W High', 'ATR 14 (%)', 'SMA 200']
+            # Explicit Signal Status Generator
+            def assign_signal(rank):
+                if rank <= 10:
+                    return "🟢 BUY (Top 10)"
+                elif rank <= 25:
+                    return "🟡 HOLD (Rank 11-25)"
+                else:
+                    return "🔴 SELL (Rank > 25)"
+
+            cand_df['Signal Status'] = cand_df['Rank'].apply(assign_signal)
+
+            # Export Universe Ranks CSV with Signal Status
+            export_cols = ['Rank', 'Signal Status', 'Ticker', 'Price', 'Score', '3M Return (%)', '6M Return (%)', '12M Return (%)', 'Alpha 3M (%)', '52W High', 'ATR 14 (%)', 'SMA 200']
             cand_df[export_cols].to_csv(UNIVERSE_RANKS_FILE, index=False)
             
             rank_lookup = dict(zip(cand_df['ticker'], cand_df['Rank']))
