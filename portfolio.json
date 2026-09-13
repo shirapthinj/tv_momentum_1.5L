@@ -1,5 +1,66 @@
 {
-    "cash": 150000.0,
-    "holdings": {},
-    "last_week": null
+    "cash": 7094.042119999989,
+    "holdings": {
+        "CUPID.NS": {
+            "shares": 53,
+            "entry_price": 280.42,
+            "peak_price": 280.0,
+            "entry_date": "2026-09-11"
+        },
+        "SIGMAADV.NS": {
+            "shares": 17,
+            "entry_price": 833.6986750000001,
+            "peak_price": 832.45,
+            "entry_date": "2026-09-11"
+        },
+        "STLTECH.NS": {
+            "shares": 16,
+            "entry_price": 898.7461000000001,
+            "peak_price": 897.4,
+            "entry_date": "2026-09-11"
+        },
+        "SWANDEF.NS": {
+            "shares": 5,
+            "entry_price": 2731.9918500000003,
+            "peak_price": 2727.9,
+            "entry_date": "2026-09-11"
+        },
+        "SANSERA.NS": {
+            "shares": 3,
+            "entry_price": 4136.0948499999995,
+            "peak_price": 4129.9,
+            "entry_date": "2026-09-11"
+        },
+        "SKYGOLD.NS": {
+            "shares": 18,
+            "entry_price": 828.6411,
+            "peak_price": 827.4,
+            "entry_date": "2026-09-11"
+        },
+        "SBC.NS": {
+            "shares": 309,
+            "entry_price": 48.402495,
+            "peak_price": 48.33,
+            "entry_date": "2026-09-11"
+        },
+        "BHAGYANGR.NS": {
+            "shares": 35,
+            "entry_price": 423.183825,
+            "peak_price": 422.55,
+            "entry_date": "2026-09-11"
+        },
+        "AIMTRON.NS": {
+            "shares": 8,
+            "entry_price": 1775.609425,
+            "peak_price": 1772.95,
+            "entry_date": "2026-09-11"
+        },
+        "SETL.NS": {
+            "shares": 31,
+            "entry_price": 468.852225,
+            "peak_price": 468.15,
+            "entry_date": "2026-09-11"
+        }
+    },
+    "last_week": 37
 }
