@@ -6,13 +6,13 @@ import plotly.express as px
 import streamlit as st
 
 st.set_page_config(
-    page_title="Quantitative Momentum Engine",
+    page_title="tv_momentum_1.5L",
     layout="wide",
     page_icon="⚡",
     initial_sidebar_state="collapsed"
 )
 
-# Custom Styling
+# Custom Styling: Executive Layout, Bold Headers & Centered Alignment
 st.markdown("""
 <style>
     .stApp { background-color: #0B0E14; font-family: 'Inter', sans-serif; }
@@ -54,8 +54,8 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown("<h2>⚡ Quantitative Momentum Engine</h2>", unsafe_allow_html=True)
-st.markdown("<p style='color: #8B949E; margin-bottom: 20px;'>TradingView-Powered Executive Analytics & Friction Cost Engine</p>", unsafe_allow_html=True)
+st.markdown("<h2>⚡ tv_momentum_1.5L</h2>", unsafe_allow_html=True)
+st.markdown("<p style='color: #8B949E; margin-bottom: 20px;'>TradingView-Powered Quantitative Momentum Engine | Nifty 500 Trend-Following Strategy (₹1.5L Capital Base)</p>", unsafe_allow_html=True)
 
 @st.cache_data(ttl=60)
 def load_data():
@@ -276,7 +276,6 @@ with tab3:
         
         disp_df = ranks_df.copy()
         
-        # Fallback if Signal Status is missing
         if 'Signal Status' not in disp_df.columns:
             disp_df['Signal Status'] = disp_df['Rank'].apply(lambda r: "🟢 BUY (Top 10)" if r <= 10 else ("🟡 HOLD (Rank 11-25)" if r <= 25 else "🔴 SELL (Rank > 25)"))
 
