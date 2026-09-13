@@ -106,7 +106,7 @@ if not perf_df.empty:
 tab1, tab2, tab3, tab4, tab5 = st.tabs([
     "📈 Returns & Risk Benchmarks", 
     "📋 Active Positions & Risk Exposure", 
-    "🏆 Universe Rankings & Candidates",
+    "🏆 Universe Rankings & Signals",
     "💸 Zerodha Friction & Cost Drag", 
     "📜 Executed Trade History"
 ])
@@ -255,9 +255,9 @@ with tab2:
     else:
         st.info("No active holdings currently in portfolio.")
 
-# TAB 3: UNIVERSE RANKINGS & CANDIDATES
+# TAB 3: UNIVERSE RANKINGS & SIGNALS
 with tab3:
-    st.markdown("### 🏆 Nifty 500 Scored Candidates & Rank Hierarchy")
+    st.markdown("### 🏆 Nifty 500 Scored Candidates & Signal Status")
     if not ranks_df.empty:
         r1, r2, r3, r4 = st.columns(4)
         r1.metric("Total Qualified Stocks", len(ranks_df))
@@ -275,13 +275,18 @@ with tab3:
         search_term = st.text_input("🔍 Search Ticker in Universe Rankings:", "").strip().upper()
         
         disp_df = ranks_df.copy()
-        disp_df['Status'] = disp_df['Ticker'].apply(lambda x: '💼 HELD' if x in active_symbols else ('🟢 TOP 10 PICK' if disp_df.loc[disp_df['Ticker'] == x, 'Rank'].values[0] <= 10 else ('🟡 TOP 25 SAFE' if disp_df.loc[disp_df['Ticker'] == x, 'Rank'].values[0] <= 25 else '⚪ DECAY ZONE')))
+        
+        # Fallback if Signal Status is missing
+        if 'Signal Status' not in disp_df.columns:
+            disp_df['Signal Status'] = disp_df['Rank'].apply(lambda r: "🟢 BUY (Top 10)" if r <= 10 else ("🟡 HOLD (Rank 11-25)" if r <= 25 else "🔴 SELL (Rank > 25)"))
+
+        disp_df['Portfolio Ownership'] = disp_df['Ticker'].apply(lambda x: '💼 ACTIVE HOLDING' if x in active_symbols else '⚪ WATCHLIST')
         
         if search_term:
             disp_df = disp_df[disp_df['Ticker'].str.contains(search_term)]
 
         st.dataframe(
-            disp_df[['Rank', 'Status', 'Ticker', 'Price', 'Score', '3M Return (%)', '6M Return (%)', '12M Return (%)', 'Alpha 3M (%)', '52W High', 'ATR 14 (%)', 'SMA 200']],
+            disp_df[['Rank', 'Signal Status', 'Portfolio Ownership', 'Ticker', 'Price', 'Score', '3M Return (%)', '6M Return (%)', '12M Return (%)', 'Alpha 3M (%)', '52W High', 'ATR 14 (%)', 'SMA 200']],
             use_container_width=True, hide_index=True,
             column_config={
                 "Score": st.column_config.NumberColumn("Momentum Score", format="%.2f"),
