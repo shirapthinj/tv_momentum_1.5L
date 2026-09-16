@@ -1,5 +1,5 @@
 {
-    "cash": 7094.042119999989,
+    "cash": 20173.443544999987,
     "holdings": {
         "CUPID.NS": {
             "shares": 53,
@@ -46,19 +46,13 @@
         "BHAGYANGR.NS": {
             "shares": 35,
             "entry_price": 423.183825,
-            "peak_price": 422.55,
+            "peak_price": 425.25,
             "entry_date": "2026-09-11"
         },
         "AIMTRON.NS": {
             "shares": 8,
             "entry_price": 1775.609425,
             "peak_price": 1772.95,
-            "entry_date": "2026-09-11"
-        },
-        "SETL.NS": {
-            "shares": 31,
-            "entry_price": 468.852225,
-            "peak_price": 468.15,
             "entry_date": "2026-09-11"
         }
     },

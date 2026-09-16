@@ -1,1 +1,2 @@
 Ticker,Entry Date,Entry Price,Exit Date,Exit Price,Return (%),Holding Days,Exit Reason
+SETL,2026-09-11,468.85,2026-09-16,421.92,-10.01,5,3.5x ATR Trailing Stop
