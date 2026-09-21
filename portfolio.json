@@ -1,16 +1,10 @@
 {
-    "cash": 20173.443544999987,
+    "cash": 9777.779988879993,
     "holdings": {
-        "CUPID.NS": {
-            "shares": 53,
-            "entry_price": 280.42,
-            "peak_price": 284.4,
-            "entry_date": "2026-09-11"
-        },
         "SIGMAADV.NS": {
             "shares": 17,
             "entry_price": 833.6986750000001,
-            "peak_price": 866.1,
+            "peak_price": 908.95,
             "entry_date": "2026-09-11"
         },
         "STLTECH.NS": {
@@ -19,42 +13,54 @@
             "peak_price": 897.4,
             "entry_date": "2026-09-11"
         },
-        "SWANDEF.NS": {
-            "shares": 5,
-            "entry_price": 2731.9918500000003,
-            "peak_price": 2746.4,
-            "entry_date": "2026-09-11"
-        },
         "SANSERA.NS": {
             "shares": 3,
             "entry_price": 4136.0948499999995,
-            "peak_price": 4259.9,
+            "peak_price": 4297.0,
             "entry_date": "2026-09-11"
         },
-        "SKYGOLD.NS": {
-            "shares": 18,
-            "entry_price": 828.6411,
-            "peak_price": 827.4,
-            "entry_date": "2026-09-11"
+        "SHREEJISPG.NS": {
+            "shares": 20,
+            "entry_price": 710.56425,
+            "peak_price": 709.5,
+            "entry_date": "2026-09-21"
         },
-        "SBC.NS": {
-            "shares": 309,
-            "entry_price": 48.402495,
-            "peak_price": 49.24,
-            "entry_date": "2026-09-11"
+        "DIVISLAB.NS": {
+            "shares": 1,
+            "entry_price": 9424.61575,
+            "peak_price": 9410.5,
+            "entry_date": "2026-09-21"
         },
-        "BHAGYANGR.NS": {
-            "shares": 35,
-            "entry_price": 423.183825,
-            "peak_price": 446.7,
-            "entry_date": "2026-09-11"
+        "BODALCHEM.NS": {
+            "shares": 73,
+            "entry_price": 198.00656500000002,
+            "peak_price": 197.71,
+            "entry_date": "2026-09-21"
         },
-        "AIMTRON.NS": {
-            "shares": 8,
-            "entry_price": 1775.609425,
-            "peak_price": 1772.95,
-            "entry_date": "2026-09-11"
+        "TFCILTD.NS": {
+            "shares": 104,
+            "entry_price": 140.27009,
+            "peak_price": 140.06,
+            "entry_date": "2026-09-21"
+        },
+        "WELSPUNLIV.NS": {
+            "shares": 67,
+            "entry_price": 216.19380500000003,
+            "peak_price": 215.87,
+            "entry_date": "2026-09-21"
+        },
+        "WELCORP.NS": {
+            "shares": 5,
+            "entry_price": 2766.84405,
+            "peak_price": 2762.7,
+            "entry_date": "2026-09-21"
+        },
+        "TBZ.NS": {
+            "shares": 23,
+            "entry_price": 634.6505500000001,
+            "peak_price": 633.7,
+            "entry_date": "2026-09-21"
         }
     },
-    "last_week": 38
+    "last_week": 39
 }

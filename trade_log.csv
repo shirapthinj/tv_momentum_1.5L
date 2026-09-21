@@ -1,2 +1,8 @@
 Ticker,Entry Date,Entry Price,Exit Date,Exit Price,Return (%),Holding Days,Exit Reason
 SETL,2026-09-11,468.85,2026-09-16,421.92,-10.01,5,3.5x ATR Trailing Stop
+CUPID,2026-09-11,280.42,2026-09-21,250.92,-10.52,10,Rank Decay Exit (Rank #59)
+SWANDEF,2026-09-11,2731.99,2026-09-21,2727.89,-0.15,10,Rank Decay Exit (Rank #999)
+SKYGOLD,2026-09-11,828.64,2026-09-21,793.56,-4.23,10,Rank Decay Exit (Rank #29)
+SBC,2026-09-11,48.4,2026-09-21,48.33,-0.15,10,Rank Decay Exit (Rank #999)
+BHAGYANGR,2026-09-11,423.18,2026-09-21,422.55,-0.15,10,Rank Decay Exit (Rank #999)
+AIMTRON,2026-09-11,1775.61,2026-09-21,1781.67,0.34,10,Rank Decay Exit (Rank #82)
