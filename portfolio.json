@@ -4,7 +4,7 @@
         "SIGMAADV.NS": {
             "shares": 17,
             "entry_price": 833.6986750000001,
-            "peak_price": 908.95,
+            "peak_price": 948.0,
             "entry_date": "2026-09-11"
         },
         "STLTECH.NS": {
@@ -16,13 +16,13 @@
         "SANSERA.NS": {
             "shares": 3,
             "entry_price": 4136.0948499999995,
-            "peak_price": 4297.0,
+            "peak_price": 4586.5,
             "entry_date": "2026-09-11"
         },
         "SHREEJISPG.NS": {
             "shares": 20,
             "entry_price": 710.56425,
-            "peak_price": 709.5,
+            "peak_price": 719.35,
             "entry_date": "2026-09-21"
         },
         "DIVISLAB.NS": {
@@ -40,13 +40,13 @@
         "TFCILTD.NS": {
             "shares": 104,
             "entry_price": 140.27009,
-            "peak_price": 140.06,
+            "peak_price": 140.8,
             "entry_date": "2026-09-21"
         },
         "WELSPUNLIV.NS": {
             "shares": 67,
             "entry_price": 216.19380500000003,
-            "peak_price": 215.87,
+            "peak_price": 221.51,
             "entry_date": "2026-09-21"
         },
         "WELCORP.NS": {
@@ -58,7 +58,7 @@
         "TBZ.NS": {
             "shares": 23,
             "entry_price": 634.6505500000001,
-            "peak_price": 633.7,
+            "peak_price": 665.35,
             "entry_date": "2026-09-21"
         }
     },
