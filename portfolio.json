@@ -16,49 +16,49 @@
         "SANSERA.NS": {
             "shares": 3,
             "entry_price": 4136.0948499999995,
-            "peak_price": 4586.5,
+            "peak_price": 4621.4,
             "entry_date": "2026-09-11"
         },
         "SHREEJISPG.NS": {
             "shares": 20,
             "entry_price": 710.56425,
-            "peak_price": 719.35,
+            "peak_price": 723.75,
             "entry_date": "2026-09-21"
         },
         "DIVISLAB.NS": {
             "shares": 1,
             "entry_price": 9424.61575,
-            "peak_price": 9410.5,
+            "peak_price": 9624.0,
             "entry_date": "2026-09-21"
         },
         "BODALCHEM.NS": {
             "shares": 73,
             "entry_price": 198.00656500000002,
-            "peak_price": 197.71,
+            "peak_price": 199.53,
             "entry_date": "2026-09-21"
         },
         "TFCILTD.NS": {
             "shares": 104,
             "entry_price": 140.27009,
-            "peak_price": 140.8,
+            "peak_price": 141.55,
             "entry_date": "2026-09-21"
         },
         "WELSPUNLIV.NS": {
             "shares": 67,
             "entry_price": 216.19380500000003,
-            "peak_price": 221.51,
+            "peak_price": 223.77,
             "entry_date": "2026-09-21"
         },
         "WELCORP.NS": {
             "shares": 5,
             "entry_price": 2766.84405,
-            "peak_price": 2762.7,
+            "peak_price": 2796.8,
             "entry_date": "2026-09-21"
         },
         "TBZ.NS": {
             "shares": 23,
             "entry_price": 634.6505500000001,
-            "peak_price": 665.35,
+            "peak_price": 692.45,
             "entry_date": "2026-09-21"
         }
     },
