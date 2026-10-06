@@ -22,13 +22,13 @@
         "LAURUSLABS.NS": {
             "shares": 7,
             "entry_price": 2013.7160500000002,
-            "peak_price": 2010.7,
+            "peak_price": 2050.0,
             "entry_date": "2026-09-28"
         },
         "CUPID.NS": {
             "shares": 45,
             "entry_price": 320.129475,
-            "peak_price": 319.65,
+            "peak_price": 324.2,
             "entry_date": "2026-10-06"
         },
         "FINCABLES.NS": {
@@ -40,7 +40,7 @@
         "TFCILTD.NS": {
             "shares": 103,
             "entry_price": 140.580555,
-            "peak_price": 140.37,
+            "peak_price": 140.65,
             "entry_date": "2026-10-06"
         },
         "CYIENTDLM.NS": {
@@ -58,7 +58,7 @@
         "MARINE.NS": {
             "shares": 30,
             "entry_price": 473.05852500000003,
-            "peak_price": 472.35,
+            "peak_price": 478.85,
             "entry_date": "2026-10-06"
         }
     },
