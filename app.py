@@ -60,7 +60,14 @@ st.markdown("<p style='color: #8B949E; margin-bottom: 20px;'>TradingView-Powered
 @st.cache_data(ttl=60)
 def load_data():
     holdings = pd.read_csv("current_holdings.csv") if os.path.exists("current_holdings.csv") else pd.DataFrame()
-    perf = pd.read_csv("performance_history.csv") if os.path.exists("performance_history.csv") else pd.DataFrame()
+    
+    perf = pd.DataFrame()
+    if os.path.exists("performance_history.csv") and os.path.getsize("performance_history.csv") > 0:
+        perf = pd.read_csv("performance_history.csv")
+        if not perf.empty and 'Date' in perf.columns:
+            # Drop potential duplicate date logs keeping the latest entry
+            perf = perf.drop_duplicates(subset=['Date'], keep='last').reset_index(drop=True)
+            
     trades = pd.read_csv("trade_log.csv") if os.path.exists("trade_log.csv") else pd.DataFrame()
     ranks = pd.read_csv("universe_ranks.csv") if os.path.exists("universe_ranks.csv") else pd.DataFrame()
     return holdings, perf, trades, ranks
@@ -137,7 +144,8 @@ with tab1:
                 template="plotly_dark", paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
                 height=400, margin=dict(l=10, r=10, t=20, b=10), hovermode="x unified",
                 legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
-                xaxis=dict(showgrid=True, gridcolor='#1F242D'), yaxis=dict(showgrid=True, gridcolor='#1F242D', ticksuffix="%")
+                xaxis=dict(showgrid=True, gridcolor='#1F242D', type='category'),  # Discrete trading day axis
+                yaxis=dict(showgrid=True, gridcolor='#1F242D', ticksuffix="%")
             )
             st.plotly_chart(fig, use_container_width=True)
 
@@ -153,7 +161,8 @@ with tab1:
             dd_fig.update_layout(
                 template="plotly_dark", paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
                 height=400, margin=dict(l=10, r=10, t=20, b=10), hovermode="x unified",
-                xaxis=dict(showgrid=True, gridcolor='#1F242D'), yaxis=dict(showgrid=True, gridcolor='#1F242D', ticksuffix="%")
+                xaxis=dict(showgrid=True, gridcolor='#1F242D', type='category'),  # Discrete trading day axis
+                yaxis=dict(showgrid=True, gridcolor='#1F242D', ticksuffix="%")
             )
             st.plotly_chart(dd_fig, use_container_width=True)
 
