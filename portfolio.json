@@ -28,7 +28,7 @@
         "CYIENTDLM.NS": {
             "shares": 15,
             "entry_price": 944.765025,
-            "peak_price": 988.3,
+            "peak_price": 1011.25,
             "entry_date": "2026-10-06"
         },
         "MARINE.NS": {
@@ -40,7 +40,7 @@
         "SHREEJISPG.NS": {
             "shares": 17,
             "entry_price": 824.7352500000001,
-            "peak_price": 823.5,
+            "peak_price": 824.8,
             "entry_date": "2026-10-12"
         },
         "HFCL.NS": {
@@ -52,13 +52,13 @@
         "GCSL.NS": {
             "shares": 20,
             "entry_price": 724.5351750000001,
-            "peak_price": 723.45,
+            "peak_price": 736.65,
             "entry_date": "2026-10-12"
         },
         "SIGMAADV.NS": {
             "shares": 15,
             "entry_price": 963.1425500000001,
-            "peak_price": 961.7,
+            "peak_price": 1005.3,
             "entry_date": "2026-10-12"
         }
     },
