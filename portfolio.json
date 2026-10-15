@@ -1,12 +1,6 @@
 {
-    "cash": 8932.056102975004,
+    "cash": 36356.158152975004,
     "holdings": {
-        "STLTECH.NS": {
-            "shares": 16,
-            "entry_price": 898.7461000000001,
-            "peak_price": 1044.0,
-            "entry_date": "2026-09-11"
-        },
         "DIVISLAB.NS": {
             "shares": 1,
             "entry_price": 9424.61575,
@@ -40,13 +34,7 @@
         "SHREEJISPG.NS": {
             "shares": 17,
             "entry_price": 824.7352500000001,
-            "peak_price": 826.45,
-            "entry_date": "2026-10-12"
-        },
-        "HFCL.NS": {
-            "shares": 55,
-            "entry_price": 265.87822000000006,
-            "peak_price": 265.48,
+            "peak_price": 835.15,
             "entry_date": "2026-10-12"
         },
         "GCSL.NS": {
