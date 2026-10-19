@@ -1,12 +1,6 @@
 {
-    "cash": 36356.158152975004,
+    "cash": 228.69007297500502,
     "holdings": {
-        "DIVISLAB.NS": {
-            "shares": 1,
-            "entry_price": 9424.61575,
-            "peak_price": 9624.0,
-            "entry_date": "2026-09-21"
-        },
         "LAURUSLABS.NS": {
             "shares": 7,
             "entry_price": 2013.7160500000002,
@@ -17,18 +11,6 @@
             "shares": 45,
             "entry_price": 320.129475,
             "peak_price": 366.1,
-            "entry_date": "2026-10-06"
-        },
-        "CYIENTDLM.NS": {
-            "shares": 15,
-            "entry_price": 944.765025,
-            "peak_price": 1038.55,
-            "entry_date": "2026-10-06"
-        },
-        "MARINE.NS": {
-            "shares": 30,
-            "entry_price": 473.05852500000003,
-            "peak_price": 478.85,
             "entry_date": "2026-10-06"
         },
         "SHREEJISPG.NS": {
@@ -48,7 +30,37 @@
             "entry_price": 963.1425500000001,
             "peak_price": 1005.3,
             "entry_date": "2026-10-12"
+        },
+        "KMEW.NS": {
+            "shares": 4,
+            "entry_price": 3328.9860000000003,
+            "peak_price": 3324.0,
+            "entry_date": "2026-10-19"
+        },
+        "UTSSAV.NS": {
+            "shares": 14,
+            "entry_price": 1006.757875,
+            "peak_price": 1005.25,
+            "entry_date": "2026-10-19"
+        },
+        "HFCL.NS": {
+            "shares": 52,
+            "entry_price": 269.213215,
+            "peak_price": 268.81,
+            "entry_date": "2026-10-19"
+        },
+        "TBZ.NS": {
+            "shares": 18,
+            "entry_price": 769.3523000000001,
+            "peak_price": 768.2,
+            "entry_date": "2026-10-19"
+        },
+        "SBC.NS": {
+            "shares": 218,
+            "entry_price": 64.59675,
+            "peak_price": 64.5,
+            "entry_date": "2026-10-19"
         }
     },
-    "last_week": 42
+    "last_week": 43
 }
