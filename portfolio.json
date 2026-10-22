@@ -1,5 +1,5 @@
 {
-    "cash": 228.69007297500502,
+    "cash": 12546.186072975006,
     "holdings": {
         "LAURUSLABS.NS": {
             "shares": 7,
@@ -25,12 +25,6 @@
             "peak_price": 740.45,
             "entry_date": "2026-10-12"
         },
-        "SIGMAADV.NS": {
-            "shares": 15,
-            "entry_price": 963.1425500000001,
-            "peak_price": 1005.3,
-            "entry_date": "2026-10-12"
-        },
         "KMEW.NS": {
             "shares": 4,
             "entry_price": 3328.9860000000003,
@@ -40,7 +34,7 @@
         "UTSSAV.NS": {
             "shares": 14,
             "entry_price": 1006.757875,
-            "peak_price": 1005.25,
+            "peak_price": 1019.6,
             "entry_date": "2026-10-19"
         },
         "HFCL.NS": {
