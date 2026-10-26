@@ -1,5 +1,5 @@
 {
-    "cash": 12546.186072975006,
+    "cash": 3172.5946479750046,
     "holdings": {
         "LAURUSLABS.NS": {
             "shares": 7,
@@ -43,18 +43,24 @@
             "peak_price": 268.81,
             "entry_date": "2026-10-19"
         },
-        "TBZ.NS": {
-            "shares": 18,
-            "entry_price": 769.3523000000001,
-            "peak_price": 768.2,
-            "entry_date": "2026-10-19"
-        },
         "SBC.NS": {
             "shares": 218,
             "entry_price": 64.59675,
             "peak_price": 64.5,
             "entry_date": "2026-10-19"
+        },
+        "TBZ.NS": {
+            "shares": 21,
+            "entry_price": 646.4181750000001,
+            "peak_price": 645.45,
+            "entry_date": "2026-10-26"
+        },
+        "SPECTRUM.NS": {
+            "shares": 2,
+            "entry_price": 3699.7413,
+            "peak_price": 3694.2,
+            "entry_date": "2026-10-26"
         }
     },
-    "last_week": 43
+    "last_week": 44
 }
