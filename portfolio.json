@@ -4,7 +4,7 @@
         "LAURUSLABS.NS": {
             "shares": 7,
             "entry_price": 2013.7160500000002,
-            "peak_price": 2181.9,
+            "peak_price": 2244.0,
             "entry_date": "2026-09-28"
         },
         "SHREEJISPG.NS": {
@@ -16,7 +16,7 @@
         "GCSL.NS": {
             "shares": 20,
             "entry_price": 724.5351750000001,
-            "peak_price": 751.35,
+            "peak_price": 761.75,
             "entry_date": "2026-10-12"
         },
         "KMEW.NS": {
@@ -40,7 +40,7 @@
         "SBC.NS": {
             "shares": 218,
             "entry_price": 64.59675,
-            "peak_price": 66.17,
+            "peak_price": 66.52,
             "entry_date": "2026-10-19"
         },
         "TBZ.NS": {
@@ -52,7 +52,7 @@
         "SPECTRUM.NS": {
             "shares": 2,
             "entry_price": 3699.7413,
-            "peak_price": 3869.2,
+            "peak_price": 4013.7,
             "entry_date": "2026-10-26"
         }
     },
