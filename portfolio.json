@@ -1,40 +1,28 @@
 {
-    "cash": 17306.112522975007,
+    "cash": 42386.21585297501,
     "holdings": {
         "LAURUSLABS.NS": {
             "shares": 7,
             "entry_price": 2013.7160500000002,
-            "peak_price": 2244.0,
+            "peak_price": 2405.5,
             "entry_date": "2026-09-28"
         },
         "SHREEJISPG.NS": {
             "shares": 17,
             "entry_price": 824.7352500000001,
-            "peak_price": 840.3,
+            "peak_price": 843.3,
             "entry_date": "2026-10-12"
         },
         "GCSL.NS": {
             "shares": 20,
             "entry_price": 724.5351750000001,
-            "peak_price": 761.75,
+            "peak_price": 767.45,
             "entry_date": "2026-10-12"
         },
         "KMEW.NS": {
             "shares": 4,
             "entry_price": 3328.9860000000003,
             "peak_price": 3324.0,
-            "entry_date": "2026-10-19"
-        },
-        "UTSSAV.NS": {
-            "shares": 14,
-            "entry_price": 1006.757875,
-            "peak_price": 1019.6,
-            "entry_date": "2026-10-19"
-        },
-        "HFCL.NS": {
-            "shares": 52,
-            "entry_price": 269.213215,
-            "peak_price": 268.81,
             "entry_date": "2026-10-19"
         },
         "SBC.NS": {
