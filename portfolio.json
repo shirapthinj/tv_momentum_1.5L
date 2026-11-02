@@ -1,5 +1,5 @@
 {
-    "cash": 42386.21585297501,
+    "cash": 3360.2455779750107,
     "holdings": {
         "LAURUSLABS.NS": {
             "shares": 7,
@@ -10,20 +10,14 @@
         "SHREEJISPG.NS": {
             "shares": 17,
             "entry_price": 824.7352500000001,
-            "peak_price": 843.3,
+            "peak_price": 873.65,
             "entry_date": "2026-10-12"
         },
         "GCSL.NS": {
             "shares": 20,
             "entry_price": 724.5351750000001,
-            "peak_price": 767.45,
+            "peak_price": 770.65,
             "entry_date": "2026-10-12"
-        },
-        "KMEW.NS": {
-            "shares": 4,
-            "entry_price": 3328.9860000000003,
-            "peak_price": 3324.0,
-            "entry_date": "2026-10-19"
         },
         "SBC.NS": {
             "shares": 218,
@@ -31,18 +25,42 @@
             "peak_price": 66.52,
             "entry_date": "2026-10-19"
         },
-        "TBZ.NS": {
-            "shares": 21,
-            "entry_price": 646.4181750000001,
-            "peak_price": 675.1,
-            "entry_date": "2026-10-26"
-        },
         "SPECTRUM.NS": {
             "shares": 2,
             "entry_price": 3699.7413,
             "peak_price": 4013.7,
             "entry_date": "2026-10-26"
+        },
+        "CUPID.NS": {
+            "shares": 38,
+            "entry_price": 341.01075000000003,
+            "peak_price": 340.5,
+            "entry_date": "2026-11-02"
+        },
+        "TFCILTD.NS": {
+            "shares": 83,
+            "entry_price": 158.19694,
+            "peak_price": 157.96,
+            "entry_date": "2026-11-02"
+        },
+        "ATHERENERG.NS": {
+            "shares": 7,
+            "entry_price": 1777.2619,
+            "peak_price": 1774.6,
+            "entry_date": "2026-11-02"
+        },
+        "KRISHANA.NS": {
+            "shares": 56,
+            "entry_price": 235.422605,
+            "peak_price": 235.07,
+            "entry_date": "2026-11-02"
+        },
+        "SONACOMS.NS": {
+            "shares": 14,
+            "entry_price": 907.308925,
+            "peak_price": 905.95,
+            "entry_date": "2026-11-02"
         }
     },
-    "last_week": 44
+    "last_week": 45
 }
