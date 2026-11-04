@@ -16,19 +16,19 @@
         "GCSL.NS": {
             "shares": 20,
             "entry_price": 724.5351750000001,
-            "peak_price": 773.35,
+            "peak_price": 784.5,
             "entry_date": "2026-10-12"
         },
         "SBC.NS": {
             "shares": 218,
             "entry_price": 64.59675,
-            "peak_price": 66.71,
+            "peak_price": 67.16,
             "entry_date": "2026-10-19"
         },
         "SPECTRUM.NS": {
             "shares": 2,
             "entry_price": 3699.7413,
-            "peak_price": 4181.3,
+            "peak_price": 4257.9,
             "entry_date": "2026-10-26"
         },
         "CUPID.NS": {
@@ -46,13 +46,13 @@
         "ATHERENERG.NS": {
             "shares": 7,
             "entry_price": 1777.2619,
-            "peak_price": 1795.0,
+            "peak_price": 1840.0,
             "entry_date": "2026-11-02"
         },
         "KRISHANA.NS": {
             "shares": 56,
             "entry_price": 235.422605,
-            "peak_price": 235.07,
+            "peak_price": 240.29,
             "entry_date": "2026-11-02"
         },
         "SONACOMS.NS": {
