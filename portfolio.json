@@ -34,7 +34,7 @@
         "CUPID.NS": {
             "shares": 38,
             "entry_price": 341.01075000000003,
-            "peak_price": 340.5,
+            "peak_price": 341.25,
             "entry_date": "2026-11-02"
         },
         "TFCILTD.NS": {
@@ -52,13 +52,13 @@
         "KRISHANA.NS": {
             "shares": 56,
             "entry_price": 235.422605,
-            "peak_price": 240.29,
+            "peak_price": 245.47,
             "entry_date": "2026-11-02"
         },
         "SONACOMS.NS": {
             "shares": 14,
             "entry_price": 907.308925,
-            "peak_price": 905.95,
+            "peak_price": 915.25,
             "entry_date": "2026-11-02"
         }
     },
