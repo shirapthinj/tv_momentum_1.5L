@@ -1,10 +1,10 @@
 {
-    "cash": 3360.2455779750107,
+    "cash": 302.9338790750098,
     "holdings": {
         "LAURUSLABS.NS": {
             "shares": 7,
             "entry_price": 2013.7160500000002,
-            "peak_price": 2405.5,
+            "peak_price": 2454.0,
             "entry_date": "2026-09-28"
         },
         "SHREEJISPG.NS": {
@@ -22,31 +22,25 @@
         "SBC.NS": {
             "shares": 218,
             "entry_price": 64.59675,
-            "peak_price": 68.7,
+            "peak_price": 68.73,
             "entry_date": "2026-10-19"
-        },
-        "SPECTRUM.NS": {
-            "shares": 2,
-            "entry_price": 3699.7413,
-            "peak_price": 4413.8,
-            "entry_date": "2026-10-26"
         },
         "CUPID.NS": {
             "shares": 38,
             "entry_price": 341.01075000000003,
-            "peak_price": 341.25,
+            "peak_price": 342.85,
             "entry_date": "2026-11-02"
         },
         "TFCILTD.NS": {
             "shares": 83,
             "entry_price": 158.19694,
-            "peak_price": 161.89,
+            "peak_price": 168.42,
             "entry_date": "2026-11-02"
         },
         "ATHERENERG.NS": {
             "shares": 7,
             "entry_price": 1777.2619,
-            "peak_price": 1840.0,
+            "peak_price": 1859.8,
             "entry_date": "2026-11-02"
         },
         "KRISHANA.NS": {
@@ -58,9 +52,15 @@
         "SONACOMS.NS": {
             "shares": 14,
             "entry_price": 907.308925,
-            "peak_price": 915.25,
+            "peak_price": 924.0,
             "entry_date": "2026-11-02"
+        },
+        "SSWL.NS": {
+            "shares": 19,
+            "entry_price": 549.7734250000001,
+            "peak_price": 548.95,
+            "entry_date": "2026-11-09"
         }
     },
-    "last_week": 45
+    "last_week": 46
 }
