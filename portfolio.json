@@ -10,7 +10,7 @@
         "SHREEJISPG.NS": {
             "shares": 17,
             "entry_price": 824.7352500000001,
-            "peak_price": 884.55,
+            "peak_price": 886.95,
             "entry_date": "2026-10-12"
         },
         "GCSL.NS": {
@@ -22,13 +22,13 @@
         "SBC.NS": {
             "shares": 218,
             "entry_price": 64.59675,
-            "peak_price": 68.73,
+            "peak_price": 69.52,
             "entry_date": "2026-10-19"
         },
         "CUPID.NS": {
             "shares": 38,
             "entry_price": 341.01075000000003,
-            "peak_price": 354.0,
+            "peak_price": 384.8,
             "entry_date": "2026-11-02"
         },
         "TFCILTD.NS": {
@@ -40,7 +40,7 @@
         "ATHERENERG.NS": {
             "shares": 7,
             "entry_price": 1777.2619,
-            "peak_price": 1868.2,
+            "peak_price": 1923.0,
             "entry_date": "2026-11-02"
         },
         "KRISHANA.NS": {
@@ -52,13 +52,13 @@
         "SONACOMS.NS": {
             "shares": 14,
             "entry_price": 907.308925,
-            "peak_price": 925.0,
+            "peak_price": 926.0,
             "entry_date": "2026-11-02"
         },
         "SSWL.NS": {
             "shares": 19,
             "entry_price": 549.7734250000001,
-            "peak_price": 548.95,
+            "peak_price": 572.8,
             "entry_date": "2026-11-09"
         }
     },
