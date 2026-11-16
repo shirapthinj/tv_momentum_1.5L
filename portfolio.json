@@ -1,28 +1,22 @@
 {
-    "cash": 302.9338790750098,
+    "cash": 3561.341156650011,
     "holdings": {
-        "LAURUSLABS.NS": {
-            "shares": 7,
-            "entry_price": 2013.7160500000002,
-            "peak_price": 2454.0,
-            "entry_date": "2026-09-28"
-        },
         "SHREEJISPG.NS": {
             "shares": 17,
             "entry_price": 824.7352500000001,
-            "peak_price": 910.8,
+            "peak_price": 914.9,
             "entry_date": "2026-10-12"
         },
         "GCSL.NS": {
             "shares": 20,
             "entry_price": 724.5351750000001,
-            "peak_price": 822.95,
+            "peak_price": 823.5,
             "entry_date": "2026-10-12"
         },
         "SBC.NS": {
             "shares": 218,
             "entry_price": 64.59675,
-            "peak_price": 70.3,
+            "peak_price": 70.37,
             "entry_date": "2026-10-19"
         },
         "CUPID.NS": {
@@ -43,24 +37,30 @@
             "peak_price": 1945.0,
             "entry_date": "2026-11-02"
         },
-        "KRISHANA.NS": {
-            "shares": 56,
-            "entry_price": 235.422605,
-            "peak_price": 247.71,
-            "entry_date": "2026-11-02"
-        },
-        "SONACOMS.NS": {
-            "shares": 14,
-            "entry_price": 907.308925,
-            "peak_price": 926.0,
-            "entry_date": "2026-11-02"
-        },
         "SSWL.NS": {
             "shares": 19,
             "entry_price": 549.7734250000001,
             "peak_price": 572.8,
             "entry_date": "2026-11-09"
+        },
+        "RPEL.NS": {
+            "shares": 6,
+            "entry_price": 1980.1658000000002,
+            "peak_price": 1977.2,
+            "entry_date": "2026-11-16"
+        },
+        "ORIENTHOT.NS": {
+            "shares": 76,
+            "entry_price": 175.42274,
+            "peak_price": 175.16,
+            "entry_date": "2026-11-16"
+        },
+        "SOUTHBANK.NS": {
+            "shares": 215,
+            "entry_price": 61.942775000000005,
+            "peak_price": 61.85,
+            "entry_date": "2026-11-16"
         }
     },
-    "last_week": 46
+    "last_week": 47
 }
