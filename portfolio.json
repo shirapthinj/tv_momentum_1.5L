@@ -1,5 +1,5 @@
 {
-    "cash": 3561.341156650011,
+    "cash": 1601.477706650012,
     "holdings": {
         "SHREEJISPG.NS": {
             "shares": 17,
@@ -10,7 +10,7 @@
         "GCSL.NS": {
             "shares": 20,
             "entry_price": 724.5351750000001,
-            "peak_price": 848.3,
+            "peak_price": 849.3,
             "entry_date": "2026-10-12"
         },
         "SBC.NS": {
@@ -28,20 +28,14 @@
         "TFCILTD.NS": {
             "shares": 83,
             "entry_price": 158.19694,
-            "peak_price": 171.85,
+            "peak_price": 173.51,
             "entry_date": "2026-11-02"
         },
         "ATHERENERG.NS": {
             "shares": 7,
             "entry_price": 1777.2619,
-            "peak_price": 1945.0,
+            "peak_price": 1979.2,
             "entry_date": "2026-11-02"
-        },
-        "SSWL.NS": {
-            "shares": 19,
-            "entry_price": 549.7734250000001,
-            "peak_price": 572.8,
-            "entry_date": "2026-11-09"
         },
         "RPEL.NS": {
             "shares": 6,
@@ -52,15 +46,21 @@
         "ORIENTHOT.NS": {
             "shares": 76,
             "entry_price": 175.42274,
-            "peak_price": 179.98,
+            "peak_price": 180.04,
             "entry_date": "2026-11-16"
         },
-        "SOUTHBANK.NS": {
-            "shares": 215,
-            "entry_price": 61.942775000000005,
-            "peak_price": 61.85,
-            "entry_date": "2026-11-16"
+        "SAILIFE.NS": {
+            "shares": 7,
+            "entry_price": 1811.81365,
+            "peak_price": 1809.1,
+            "entry_date": "2026-11-23"
+        },
+        "DIVISLAB.NS": {
+            "shares": 1,
+            "entry_price": 11219.8045,
+            "peak_price": 11203.0,
+            "entry_date": "2026-11-23"
         }
     },
-    "last_week": 47
+    "last_week": 48
 }
