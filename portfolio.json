@@ -10,7 +10,7 @@
         "GCSL.NS": {
             "shares": 20,
             "entry_price": 724.5351750000001,
-            "peak_price": 849.3,
+            "peak_price": 852.45,
             "entry_date": "2026-10-12"
         },
         "SBC.NS": {
@@ -28,7 +28,7 @@
         "TFCILTD.NS": {
             "shares": 83,
             "entry_price": 158.19694,
-            "peak_price": 173.51,
+            "peak_price": 173.66,
             "entry_date": "2026-11-02"
         },
         "ATHERENERG.NS": {
@@ -58,7 +58,7 @@
         "DIVISLAB.NS": {
             "shares": 1,
             "entry_price": 11219.8045,
-            "peak_price": 11203.0,
+            "peak_price": 11716.5,
             "entry_date": "2026-11-23"
         }
     },
