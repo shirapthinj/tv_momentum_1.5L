@@ -1,5 +1,5 @@
 {
-    "cash": 1601.477706650012,
+    "cash": 16479.42725665001,
     "holdings": {
         "SHREEJISPG.NS": {
             "shares": 17,
@@ -13,12 +13,6 @@
             "peak_price": 852.45,
             "entry_date": "2026-10-12"
         },
-        "SBC.NS": {
-            "shares": 218,
-            "entry_price": 64.59675,
-            "peak_price": 70.37,
-            "entry_date": "2026-10-19"
-        },
         "CUPID.NS": {
             "shares": 38,
             "entry_price": 341.01075000000003,
@@ -28,7 +22,7 @@
         "TFCILTD.NS": {
             "shares": 83,
             "entry_price": 158.19694,
-            "peak_price": 173.66,
+            "peak_price": 174.94,
             "entry_date": "2026-11-02"
         },
         "ATHERENERG.NS": {
@@ -52,7 +46,7 @@
         "SAILIFE.NS": {
             "shares": 7,
             "entry_price": 1811.81365,
-            "peak_price": 1809.1,
+            "peak_price": 1812.6,
             "entry_date": "2026-11-23"
         },
         "DIVISLAB.NS": {
